@@ -5,7 +5,8 @@ var filesToCache = [
   '/etc.clientlibs/aempwaexample/clientlibs/clientlib-base.css',
   '/etc.clientlibs/aempwaexample/clientlibs/clientlib-base.js',
   '/content/aempwaexample/en.html',
-  '/content/dam/aempwaexample/asset.jpg'
+  '/content/dam/aempwaexample/asset.jpg',
+  '/content/aempwaexample/en/offline-page.html'
 ];
 
 self.addEventListener('install', function(e) {
@@ -48,7 +49,16 @@ self.addEventListener('fetch', function(e) {
       })
       .catch(function() {
         console.debug('[ServiceWorker] Using response from cache', e.request.url);
-        return cache.match(e.request);
+        return cache.match(e.request).then(function(cachedResponse) {
+          if (cachedResponse) {
+            return cachedResponse;
+          } else {
+            console.debug('[ServiceWorker] Using offline page from cache');
+            return caches.open(cacheName).then(function(progCache) {
+              return progCache.match('/content/aempwaexample/en/offline-page.html');
+            });
+          }
+        });
       });
     })
   );
