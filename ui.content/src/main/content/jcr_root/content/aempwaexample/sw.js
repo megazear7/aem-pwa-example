@@ -1,4 +1,6 @@
 var cacheName = 'aempwaexample-v3';
+var contentCacheName = 'aempwaexample-content-v1';
+var cacheNames = [cacheName, contentCacheName];
 var filesToCache = [
   '/etc.clientlibs/aempwaexample/clientlibs/clientlib-base.css',
   '/etc.clientlibs/aempwaexample/clientlibs/clientlib-base.js',
@@ -21,7 +23,7 @@ self.addEventListener('activate', function(e) {
   e.waitUntil(
     caches.keys().then(function(keyList) {
       return Promise.all(keyList.map(function(key) {
-        if (key !== cacheName) {
+        if (! cacheNames.includes(key)) {
           console.log('[ServiceWorker] Removing old cache', key);
           return caches.delete(key);
         }
@@ -33,10 +35,21 @@ self.addEventListener('activate', function(e) {
 
 self.addEventListener('fetch', function(e) {
   console.log('[ServiceWorker] Fetch', e.request.url);
-  // Respond with the network request first and fall back to the cache if it exists.
+
+  // Responde with the network request first and cache the request.
+  // If we cannot connect to the network then use the cached response.
   e.respondWith(
-    fetch(e.request).catch(function() {
-      return caches.match(e.request);
+    caches.open(contentCacheName).then(function(cache) {
+      return fetch(e.request)
+      .then(function(response){
+        console.log('[ServiceWorker] Updating cache', e.request.url);
+        cache.put(e.request.url, response.clone());
+        return response;
+      })
+      .catch(function() {
+        console.log('[ServiceWorker] Using response from cache', e.request.url);
+        return cache.match(e.request);
+      });
     })
   );
 });
