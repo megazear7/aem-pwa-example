@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <workspaceFilter version="1.0">
     <filter root="/conf/aempwaexample" mode="merge"/>
-    <filter root="/content/aempwaexample/jcr:content/sw.js" mode="replace"/>
+    <filter root="/content/aempwaexample/sw.js" mode="replace"/>
     <filter root="/content/aempwaexample" mode="merge">
       <exclude pattern=".*\sw.js" />
     </filter>
