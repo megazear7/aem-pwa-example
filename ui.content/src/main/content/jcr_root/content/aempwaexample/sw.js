@@ -1,12 +1,13 @@
-var cacheName = 'aempwaexample-v3';
+var cacheName = 'aempwaexample-v1';
 var contentCacheName = 'aempwaexample-content';
 var cacheNames = [cacheName, contentCacheName];
+var offlinePage = '/content/aempwaexample/en/offline-page.html';
 var filesToCache = [
   '/etc.clientlibs/aempwaexample/clientlibs/clientlib-base.css',
   '/etc.clientlibs/aempwaexample/clientlibs/clientlib-base.js',
   '/content/aempwaexample/en.html',
   '/content/dam/aempwaexample/asset.jpg',
-  '/content/aempwaexample/en/offline-page.html'
+  offlinePage
 ];
 
 self.addEventListener('install', function(e) {
@@ -55,7 +56,7 @@ self.addEventListener('fetch', function(e) {
           } else {
             console.debug('[ServiceWorker] Using offline page from cache');
             return caches.open(cacheName).then(function(progCache) {
-              return progCache.match('/content/aempwaexample/en/offline-page.html');
+              return progCache.match(offlinePage);
             });
           }
         });
