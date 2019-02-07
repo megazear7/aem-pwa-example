@@ -1,5 +1,5 @@
 var cacheName = 'aempwaexample-v3';
-var contentCacheName = 'aempwaexample-content-v1';
+var contentCacheName = 'aempwaexample-content';
 var cacheNames = [cacheName, contentCacheName];
 var filesToCache = [
   '/etc.clientlibs/aempwaexample/clientlibs/clientlib-base.css',
