@@ -13,11 +13,17 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-.cmp-breadcrumb__item {
+.cmp-breadcrumb__item:not(:first-child) {
     &:before {
         content: "\003e";
 
         display: inline-block;
         padding: 0 10px;
     }
+}
+
+.breadcrumb {
+  min-height: 300px;
+  background-color: #dedede;
+  padding: 30px;
 }

@@ -27,9 +27,11 @@ function showOfflineComponent() {
   // We only want to display the offline container if we found at least one saved link.
   if (! navigator.onLine && document.querySelectorAll('.offline-container .saved-links a').length > 0) {
     document.querySelector('.offline-container').style.display = 'block';
+    document.querySelector('.online-container').style.display = 'none';
   }
 }
 
 function hideOfflineComponent() {
   document.querySelector('.offline-container').style.display = 'none';
+  document.querySelector('.online-container').style.display = 'block';
 }
