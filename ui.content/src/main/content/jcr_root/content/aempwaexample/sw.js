@@ -7,7 +7,7 @@ var cacheNames = [contentCacheName];
 
 // We will give the web page this offline page if we are off the network and
 // the page it asks for is not available in the cache.
-var offlinePage = '/content/aempwaexample/en/offline-page.html';
+var offlinePage = '/content/aempwaexample/en/offline.html';
 
 // This will be the pages that get cached when the service worker is installed.
 var filesToCache = [
